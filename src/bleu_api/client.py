@@ -4,11 +4,13 @@ import requests
 class BleuAPIClient:
 
     BASE_URL = "https://api.example.com"
-    CLIENT_ID = "your_api_key"
-    CLIENT_SECRET = "your_client_secret"
+    CLIENT_ID = "4mfq2291m54gtg4t50gh83bcaa"
+    CLIENT_SECRET = "5uo8j2pq1dfmsmirkoim6rmse3og78ee0el86eltd6oh96fi3ao"
 
-    def __init__(self, base_url):
-        self.base_url = base_url
+    def __init__(self):
+        self.base_url = BleuAPIClient.BASE_URL
+        self.client_id = BleuAPIClient.CLIENT_ID
+        self.client_secret = BleuAPIClient.CLIENT_SECRET
 
     def make_request(self, endpoint, method='GET', params=None, data=None, headers=None):
         url = f"{self.base_url}/{endpoint}"
