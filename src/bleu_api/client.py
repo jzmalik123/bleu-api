@@ -21,7 +21,10 @@ class BleuAPIClient:
         'single_kyc_verification': 'kycverify/api/kycverify/kyc-verification',
         'multiple_kyc_verification': 'kycverify/api/kycverify/multi-kyc-verification',
         'face_match_verification': 'facelink/api/face-check',
-        'generate_kyc_link': 'kycverify/api/kycverify/kyc-verify-link'
+        'generate_kyc_link': 'kycverify/api/kycverify/kyc-verify-link',
+        'kyc_records_by_link': 'kycverify/api/kycverify/link',
+        'kyc_records_by_request_id': 'kycverify/api/kycverify/records',
+        'kyc_records_by_reference': 'kycverify/api/kycverify/reference'
     }
 
     RESPONSE_CODES = {
@@ -166,4 +169,46 @@ class BleuAPIClient:
         }
 
         response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=None)
+        return response
+
+    def kyc_records_by_link(self, link):
+        endpoint = self.__class__.API_ENDPOINTS['kyc_records_by_link']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        params = {'linkId': link}
+        response = self.make_request(endpoint=endpoint, method='GET', params=params, data={}, headers=headers, files=None)
+        return response
+
+    def kyc_records_by_request_id(self, request_id):
+        endpoint = self.__class__.API_ENDPOINTS['kyc_records_by_request_id']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        params = {'requestId': request_id}
+        response = self.make_request(endpoint=endpoint, method='GET', params=params, data={}, headers=headers, files=None)
+        return response
+
+    def kyc_records_by_request_id(self, reference):
+        endpoint = self.__class__.API_ENDPOINTS['kyc_records_by_reference']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        params = {'referenceId': reference}
+        response = self.make_request(endpoint=endpoint, method='GET', params=params, data={}, headers=headers, files=None)
         return response
