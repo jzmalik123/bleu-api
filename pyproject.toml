@@ -12,7 +12,7 @@ url = "https://github.com/jzmalik123/bleu-api"
 license = "MIT"
 
 [project]
-name = "bleu_api_jzmalik123"
+name = "bleu_api"
 version = "1.0.0"
 authors = [
   { name="Jahanzaib Malik", email="jzmalik123@gmail.com" },

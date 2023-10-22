@@ -11,7 +11,7 @@ BleuAPIClient is a Python client for interacting with the Bleu API. It provides 
 You can install this package using `pip`:
 
 ```bash
-pip install bleu-api-client
+pip install bleu-api
 ```
 
 ## Usage
