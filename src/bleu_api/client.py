@@ -1,6 +1,7 @@
 import requests
 import datetime
 
+
 class BleuAPIClient:
 
     BASE_URL = "https://sdk.faceki.com"
