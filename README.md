@@ -21,7 +21,7 @@ To use the BleuAPIClient in your Python project, you need to create an instance 
 Here's an example of how to get started:
 
 ```python
-from BleuAPIClient import BleuAPIClient
+from bleu_api.client import *
 
 # Initialize the client with your client ID and client secret
 client = BleuAPIClient(client_id='your_client_id', client_secret='your_client_secret')
