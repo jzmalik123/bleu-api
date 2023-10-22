@@ -20,7 +20,8 @@ class BleuAPIClient:
         'get_token': 'auth/api/access-token',
         'single_kyc_verification': 'kycverify/api/kycverify/kyc-verification',
         'multiple_kyc_verification': 'kycverify/api/kycverify/multi-kyc-verification',
-        'face_match_verification': 'facelink/api/face-check'
+        'face_match_verification': 'facelink/api/face-check',
+        'generate_kyc_link': 'kycverify/api/kycverify/kyc-verify-link'
     }
 
     RESPONSE_CODES = {
@@ -152,4 +153,17 @@ class BleuAPIClient:
             ('selfie_image', (selfie_image_path.split('/')[-1], open(selfie_image_path, 'rb'), 'image/jpeg'))
         ]
         response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=files)
+        return response
+
+    def generate_kyc_link(self):
+        endpoint = self.__class__.API_ENDPOINTS['generate_kyc_link']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=None)
         return response
