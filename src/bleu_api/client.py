@@ -18,7 +18,8 @@ class BleuAPIClient:
 
     API_ENDPOINTS = {
         'get_token': 'auth/api/access-token',
-        'single_kyc_verification': 'kycverify/api/kycverify/kyc-verification'
+        'single_kyc_verification': 'kycverify/api/kycverify/kyc-verification',
+        'multiple_kyc_verification': 'kycverify/api/kycverify/multi-kyc-verification'
     }
 
     RESPONSE_CODES = {
@@ -106,3 +107,32 @@ class BleuAPIClient:
         response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=files)
         return response
 
+    def multiple_kyc_verification(self, selfie_image_path, id_front_path, id_back_path, dl_front_path=None,
+                                  dl_back_path=None,  pp_front_path=None, pp_back_path=None):
+        endpoint = self.__class__.API_ENDPOINTS['multiple_kyc_verification']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        files = [
+            ('selfie_image', (selfie_image_path.split('/')[-1], open(selfie_image_path, 'rb'), 'image/jpeg')),
+            ('id_front_image', (id_front_path.split('/')[-1], open(id_front_path, 'rb'), 'image/jpeg')),
+            ('id_back_image', (id_back_path.split('/')[-1], open(id_front_path, 'rb'), 'image/jpeg'))
+        ]
+        if dl_front_path and dl_back_path:
+            files.extend([
+                ('dl_front_image', (dl_front_path.split('/')[-1], open(dl_front_path, 'rb'), 'image/jpeg')),
+                ('dl_back_image', (dl_back_path.split('/')[-1], open(dl_front_path, 'rb'), 'image/jpeg'))
+            ])
+        if pp_front_path and pp_back_path:
+            files.extend([
+                ('pp_front_image', (pp_front_path.split('/')[-1], open(pp_front_path, 'rb'), 'image/jpeg')),
+                ('pp_back_image', (pp_back_path.split('/')[-1], open(pp_front_path, 'rb'), 'image/jpeg'))
+            ])
+
+        response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=files)
+        return response
