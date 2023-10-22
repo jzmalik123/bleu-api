@@ -1,20 +1,9 @@
 import requests
 import datetime
 
-# gettoken - done
-# kycverification
-# multiplekycverification
-# checked-verified-face
-# faceki-link-genration
-# get-faceki-link-verfiy
-# get-kyc-record-by-id
-
-
 class BleuAPIClient:
 
     BASE_URL = "https://sdk.faceki.com"
-    # CLIENT_ID = "4mfq2291m54gtg4t50gh83bcaa"
-    # CLIENT_SECRET = "5uo8j2pq1dfmsmirkoim6rmse3og78ee0el86eltd6oh96fi3ao"
 
     API_ENDPOINTS = {
         'get_token': 'auth/api/access-token',
