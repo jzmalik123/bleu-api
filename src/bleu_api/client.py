@@ -86,3 +86,23 @@ class BleuAPIClient:
             self.token_expiry = datetime.datetime.now() + datetime.timedelta(seconds=response['data']['expires_in'])
         return self.access_token
 
+    def single_kyc_verification(self, selfie_image_path, doc_front_path, doc_back_path):
+        endpoint = self.__class__.API_ENDPOINTS['single_kyc_verification']
+
+        if self.access_token_expired():
+            self.get_access_token()
+
+        headers = {
+            'Authorization': "Bearer %s" % self.access_token
+        }
+
+        files = [
+            ('selfie_image', (selfie_image_path.split('/')[-1], open(selfie_image_path, 'rb'), 'image/jpeg')),
+            ('doc_front_image',
+             (doc_front_path.split('/')[-1], open(doc_front_path, 'rb'), 'image/jpeg')),
+            ('doc_back_image',
+             (doc_back_path.split('/')[-1], open(doc_back_path, 'rb'), 'image/jpeg'))
+        ]
+        response = self.make_request(endpoint=endpoint, method='POST', params={}, data={}, headers=headers, files=files)
+        return response
+
