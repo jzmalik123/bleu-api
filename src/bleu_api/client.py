@@ -18,28 +18,28 @@ class BleuAPIClient:
     }
 
     RESPONSE_CODES = {
-        "SUCCESS": 0,
-        "INTERNAL_SYSTEM_ERROR": 1000,
-        "NO_RULES_FOR_COMPANY": 7001,
-        "NEED_REQUIRED_IMAGES": 8001,
-        "DOCUMENT_VERIFY_FAILED": 8002,
-        "PLEASE_TRY_AGAIN": 8003,
-        "FACE_CROPPED": 8004,
-        "FACE_TOO_CLOSED": 8005,
-        "FACE_NOT_FOUND": 8006,
-        "FACE_CLOSED_TO_BORDER": 8007,
-        "FACE_TOO_SMALL": 8008,
-        "POOR_LIGHT": 8009,
-        "ID_VERIFY_FAIL": 8010,
-        "DL_VERIFY_FAIL": 8011,
-        "PASSPORT_VERIFY_FAIL": 8012,
-        "DATA_NOT_FOUND": 8013,
-        "INVALID_VERIFICATION_LINK": 8014,
-        "VERIFICATION_LINK_EXPIRED": 8015,
-        "FAIL_TO_GENERATE_LINK": 8016,
-        "KYC_VERIFICATION_LIMIT_REACHED": 8017,
-        "SELFIE_MULTIPLE_FACES": 8018,
-        "FACE_BLURR": 8019
+        0: "SUCCESS",
+        1000: "INTERNAL_SYSTEM_ERROR",
+        7001: "NO_RULES_FOR_COMPANY",
+        8001: "NEED_REQUIRED_IMAGES",
+        8002: "DOCUMENT_VERIFY_FAILED",
+        8003: "PLEASE_TRY_AGAIN",
+        8004: "FACE_CROPPED",
+        8005: "FACE_TOO_CLOSED",
+        8006: "FACE_NOT_FOUND",
+        8007: "FACE_CLOSED_TO_BORDER",
+        8008: "FACE_TOO_SMALL",
+        8009: "POOR_LIGHT",
+        8010: "ID_VERIFY_FAIL",
+        8011: "DL_VERIFY_FAIL",
+        8012: "PASSPORT_VERIFY_FAIL",
+        8013: "DATA_NOT_FOUND",
+        8014: "INVALID_VERIFICATION_LINK",
+        8015: "VERIFICATION_LINK_EXPIRED",
+        8016: "FAIL_TO_GENERATE_LINK",
+        8017: "KYC_VERIFICATION_LIMIT_REACHED",
+        8018: "SELFIE_MULTIPLE_FACES",
+        8019: "FACE_BLURR"
     }
 
     def __init__(self, client_id, client_secret):
@@ -77,7 +77,7 @@ class BleuAPIClient:
         params = {'clientId': self.client_id, 'clientSecret': self.client_secret}
         response = self.make_request(endpoint=endpoint, method='GET', params=params)
 
-        if response['responseCode'] == self.__class__.RESPONSE_CODES["SUCCESS"]:
+        if self.__class__.RESPONSE_CODES[response['responseCode']] == "SUCCESS":
             self.access_token = response['data']['access_token']
             self.token_expiry = datetime.datetime.now() + datetime.timedelta(seconds=response['data']['expires_in'])
         return self.access_token
